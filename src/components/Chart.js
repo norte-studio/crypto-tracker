@@ -47,13 +47,30 @@ export default function Chart ({coinPrices}) {
     //         {time: 1682917219125, bitcoin: 29000, etherum: 1000}
     //     ]
 
+    let percentageData = data.map(point => {
+      let newPoint = {time: point.time};
+      Object.keys(point).filter(key => key !== 'time').forEach(coinId => {
+        const coinVal = point[coinId];
+        const initialVal = data[0][coinId]
+        const diff = coinVal - initialVal;
+        const percentage = Math.round(diff/initialVal * 100, 1);
+        newPoint[coinId] = percentage;
+      });
+      return newPoint;
+    });
+     // percentage
+    //     [
+    //         {time: 1682913627610, bitcoin: 0, etherum: 0},
+    //         {time: 1682917219120, bitcoin: 5, etherum: 10},
+    //         {time: 1682917219125, bitcoin: 3, etherum: 2}
+    //     ]
     
     return (
     <ResponsiveContainer width="100%" height="100%">
         <LineChart
           width={500}
           height={300}
-          data={data}
+          data={percentageData}
           margin={{
             top: 5,
             right: 30,
