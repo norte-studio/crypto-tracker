@@ -20,6 +20,11 @@ function App() {
   //       { coindId: 'etherum', prices: [      ]},
   //  ]
   
+  const [walletCoins, setWalletCoins] = useState([]);
+  const [walletTotal, setWalletTotal] = useState(0);
+  const [walletCoinPrices, setWalletCoinPrices] = useState([])
+
+
 
   const fetchCoinPrices = async (coinId) => {
     const res = await fetch(
@@ -66,7 +71,53 @@ function App() {
     setCoinPrices(coinPrices.filter(coin => coin.coinId !== coinId));
   };
 
+  const fetchWalletCoinPrices = async (coinId) => {
+    const res = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=30`
+    );
+    const data = await res.json();
+    setWalletCoinPrices([...walletCoinPrices, { coinId, prices: data.prices }]);
+  };
+
+  const onWalletCoinAdded = (walletCoin) => {
+    fetchWalletCoinPrices(walletCoin.coinId)
+    //check if coin exists
+    setWalletCoins([...walletCoins, walletCoin])
+  };
+
+  useEffect(() => {
+    let total = 0;
+     // walletCoinPrices: [
+      //     {
+      //         coinId: 'bitcoin',
+      //         prices: [
+      //             [1682913627610, 30000],
+      //             [1682917219120, 30100],
+      //             [1682917219125, 29000]
+      //         ]
+      //     },
+      //     {
+      //         coinId: 'etherum',
+      //         prices: [
+      //             [1682913627610, 1200],
+      //             [1682917219120, 1100],
+      //             [1682917219125, 1000]
+      //         ]
+      //     }
+      // ]
+    for(let {coinId, quantity} of walletCoins) {
+      const coin = walletCoinPrices.find(coin => coin.coinId === coinId);
+      if (!coin) continue;
+
+      const prices = coin.prices;
+      const lastPrice = prices[prices.length-1][1];
+      total += quantity*lastPrice;
+
+    }
+    setWalletTotal(total)
+  }, [walletCoins, walletCoinPrices])
   
+
   return (
     <div className="App">
       <div className="left-panel">
@@ -76,7 +127,12 @@ function App() {
           onWatchListCoinAdded={onWatchListCoinAdded}
           onWatchListCoinDeleted={onWatchListCoinDeleted}
         />
-        <Wallet />
+        <Wallet 
+          allCoins={allCoins}
+          walletCoins={walletCoins}
+          onWalletCoinAdded={onWalletCoinAdded}
+          walletTotal={walletTotal}
+        />
       </div>
       <div className="right-panel">
         <Chart coinPrices={coinPrices} />
