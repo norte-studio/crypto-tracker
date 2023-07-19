@@ -1,9 +1,10 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Chart from "./components/Chart";
+import WatchlistChart from "./components/WatchlistChart";
 import { useState, useEffect } from "react";
 import WatchList from "./components/WatchList";
 import Wallet from "./components/Wallet";
+import WalletChart from "./components/WalletChart";
 
 const defaultWatchList = [
   { id: "bitcoin", symbol: "btc", name: "Bitcoin" },
@@ -135,7 +136,8 @@ function App() {
         />
       </div>
       <div className="right-panel">
-        <Chart coinPrices={coinPrices} />
+        <WatchlistChart coinPrices={coinPrices} />
+        <WalletChart walletCoinPrices={walletCoinPrices} walletCoins={walletCoins} />
       </div>
 
       {/* <CoinList onCoinSelected={onCoinSelected}/> */}

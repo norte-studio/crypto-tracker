@@ -22,7 +22,7 @@ import moment from 'moment';
     //     }
     // ]
 
-export default function Chart ({coinPrices}) {
+export default function WatchlistChart ({coinPrices}) {
     let timeMap = {};
     for(let coin of coinPrices) {
         for(let [time, price] of coin.prices) {
