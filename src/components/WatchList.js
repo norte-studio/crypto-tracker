@@ -3,16 +3,17 @@ export default function WatchList({allCoins, watchListCoins, onWatchListCoinAdde
   return (
     <div>
         <div>WatchList</div>
-        <div>
+        <div className="watchlist-select-container">
             <select onChange={(e) => onWatchListCoinAdded(e.target.value)}>
                 <option key="default" value="default">Add coin to watchlist</option>
                 {allCoins.map(coin => <option key={coin.id} value={coin.id}>{coin.name} ({coin.symbol})</option>)}
             </select>
         </div>
         <div>
-            {watchListCoins.map(coin => <div>
-                <span>{coin.symbol}</span>
-                <span style={{'margin-left': '20px'}} onClick={() => onWatchListCoinDeleted(coin.id)}>x</span>
+            {watchListCoins.map(coin => 
+            <div className="watchlist-coin">
+                <span className="watchlist-coin-symbol">{coin.symbol}</span>
+                <span className="watchlist-coin-del" onClick={() => onWatchListCoinDeleted(coin.id)}>x</span>
             </div>)}
         </div>
     </div>

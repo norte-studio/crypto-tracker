@@ -23,6 +23,7 @@ export default function Wallet({className, allCoins, onWalletCoinAdded, walletCo
           </select>
           <input 
               type="number" 
+              placeholder="1"
               onChange={(e) => onWalletListCoinQuantityChanged(e.target.value)}
           />
           <button onClick={() => onWalletCoinAdded(walletCoinToAdd)}>Add</button>

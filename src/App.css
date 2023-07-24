@@ -25,3 +25,65 @@ body.app-body {
   font-weight: bold;
   margin-bottom: 10px;
 }
+
+.watchlist-select-container {
+  margin-top: 10px;
+}
+
+select {
+  width: 100%;
+  height: 30px;
+  border-radius: 6px;
+  padding: 0 6px;
+  color: #2ba92b;
+}
+
+.watchlist-coin {
+  width: 100%;
+  background-color: #ffffff38;
+  margin: 5px 0;
+  border-radius: 6px;
+  padding: 0 10px;
+  height: 30px;
+}
+
+.watchlist-coin-symbol {
+  width: calc(100% - 20px);
+  display: inline-block;
+}
+
+.watchlist-coin-del {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.watchlist-coin-del:hover {
+  color: red;
+}
+
+.coin-to-add {
+  display: flex;
+  margin-top: 10px;
+}
+.coin-to-add select {
+  flex: 1;
+}
+.coin-to-add input, .coin-to-add button {
+  width: 60px;
+  margin-left: 6px;
+  border-radius: 6px;
+  height: 30px;
+  border: 0;
+}
+
+.coin-to-add input {
+  padding: 0 6px;
+  color: #2ba92b;
+}
+
+.coin-to-add button {
+  background-color: #6faa84;
+  color: white;
+  border: 0
+}
+
