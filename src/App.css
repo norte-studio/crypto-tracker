@@ -1,50 +1,19 @@
-.App {
-  display: flex;
-  height: 50vh;
-  width: 50vw;
-  text-align: center;
-}
 
-.left-panel > div {
-  min-height: 100px;
-}
 
-.right-panel {
-  width: 100%;
-  height: 100%;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+body.app-body {
+  background-image: url(https://media.istockphoto.com/id/663894440/video/shibuya-crossing-time-lapse.jpg?s=640x640&k=20&c=DhqzH3GFW5GTrDi5O27LOkRYFP-p3jgG0ewXMa5QfPo=);
+  background-size: cover;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.container.app {
+  width: 70vw;
+  margin: 0 auto;
+  padding-top: 40px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-section {
+  min-height: 300px;
+  padding: 10px;
+  background: #000000b5;
 }

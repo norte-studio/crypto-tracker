@@ -120,25 +120,34 @@ function App() {
   
 
   return (
-    <div className="App">
-      <div className="left-panel">
-        <WatchList
-          allCoins={allCoins}
-          watchListCoins={watchListCoins}
-          onWatchListCoinAdded={onWatchListCoinAdded}
-          onWatchListCoinDeleted={onWatchListCoinDeleted}
-        />
-        <Wallet 
-          allCoins={allCoins}
-          walletCoins={walletCoins}
-          onWalletCoinAdded={onWalletCoinAdded}
-          walletTotal={walletTotal}
-        />
-      </div>
-      <div className="right-panel">
-        <WatchlistChart coinPrices={coinPrices} />
-        <WalletChart walletCoinPrices={walletCoinPrices} walletCoins={walletCoins} />
-      </div>
+    <div className="container app">
+        <div className="row">
+            <div className="col-4 app-section">
+              <WatchList
+                allCoins={allCoins}
+                watchListCoins={watchListCoins}
+                onWatchListCoinAdded={onWatchListCoinAdded}
+                onWatchListCoinDeleted={onWatchListCoinDeleted}
+              />
+            </div>
+            <div className="col-8 app-section">
+               <WatchlistChart coinPrices={coinPrices} />
+            </div>
+            <div className="w-100"></div>
+            <div className="col-4 app-section">
+              <Wallet 
+                allCoins={allCoins}
+                walletCoins={walletCoins}
+                onWalletCoinAdded={onWalletCoinAdded}
+                walletTotal={walletTotal}
+              />
+            </div>
+            <div className="col-8 app-section">
+              <WalletChart
+                walletCoinPrices={walletCoinPrices}
+                walletCoins={walletCoins} />
+            </div>          
+        </div>
 
       {/* <CoinList onCoinSelected={onCoinSelected}/> */}
     </div>
