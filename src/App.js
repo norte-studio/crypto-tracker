@@ -16,47 +16,55 @@ function App() {
   const [allCoins, setAllCoins] = useState([]);
   const [watchListCoins, setWatchListCoins] = useState(defaultWatchList);
   const [coinPrices, setCoinPrices] = useState([]);
+  const [apiError, setApiError] = useState(false);
   // [
   //       { coindId: 'bitcoin', prices: [      ]},
   //       { coindId: 'etherum', prices: [      ]},
   //  ]
-  
+
   const [walletCoins, setWalletCoins] = useState([]);
   const [walletTotal, setWalletTotal] = useState(0);
-  const [walletCoinPrices, setWalletCoinPrices] = useState([])
+  const [walletCoinPrices, setWalletCoinPrices] = useState([]);
 
-
-
-  const fetchCoinPrices = async (coinId) => {
-    const res = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=30`
-    );
-    const data = await res.json();
-    setCoinPrices([...coinPrices, { coinId, prices: data.prices }]);
+  const fetchData = async (url) => {
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      return data;
+    } catch (e) {
+      setApiError(true);
+    }
   };
 
-  const fetchDefaultCoinsPrices = async() => {
-    const result = await Promise.all(defaultWatchList.map(async (coin) => {
-      const res = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart?vs_currency=usd&days=30`
-      );
-      const data = await res.json();
-      return {coinId: coin.id, prices: data.prices};
-    }));
+  const fetchCoinPrices = async (coinId) => {
+    const data = await fetchData(
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=30`
+    );
+    setCoinPrices([...coinPrices, { coinId, prices: data ? data.prices : [] }]);
+  };
+
+  const fetchDefaultCoinsPrices = async () => {
+    const result = await Promise.all(
+      defaultWatchList.map(async (coin) => {
+        const data = await fetchData(
+          `https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart?vs_currency=usd&days=30`
+        );
+        return { coinId: coin.id, prices: data ? data.prices : [] };
+      })
+    );
     setCoinPrices(result);
-  }
+  };
 
   const fetchAllCoins = async () => {
-    const res = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false&locale=en"
-    );
-    const data = await res.json();
-    setAllCoins(data);
+      const data = await fetchData(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false&locale=en"
+      );
+      setAllCoins(data ? data : []);
   };
 
   useEffect(() => {
     fetchAllCoins();
-    fetchDefaultCoinsPrices();    
+    fetchDefaultCoinsPrices();
   }, []);
 
   const onWatchListCoinAdded = (coinId) => {
@@ -69,7 +77,7 @@ function App() {
 
   const onWatchListCoinDeleted = (coinId) => {
     setWatchListCoins(watchListCoins.filter((coin) => coin.id !== coinId));
-    setCoinPrices(coinPrices.filter(coin => coin.coinId !== coinId));
+    setCoinPrices(coinPrices.filter((coin) => coin.coinId !== coinId));
   };
 
   const fetchWalletCoinPrices = async (coinId) => {
@@ -81,73 +89,73 @@ function App() {
   };
 
   const onWalletCoinAdded = (walletCoin) => {
-    fetchWalletCoinPrices(walletCoin.coinId)
+    fetchWalletCoinPrices(walletCoin.coinId);
     //check if coin exists
-    setWalletCoins([...walletCoins, walletCoin])
+    setWalletCoins([...walletCoins, walletCoin]);
   };
 
   useEffect(() => {
     let total = 0;
-     // walletCoinPrices: [
-      //     {
-      //         coinId: 'bitcoin',
-      //         prices: [
-      //             [1682913627610, 30000],
-      //             [1682917219120, 30100],
-      //             [1682917219125, 29000]
-      //         ]
-      //     },
-      //     {
-      //         coinId: 'etherum',
-      //         prices: [
-      //             [1682913627610, 1200],
-      //             [1682917219120, 1100],
-      //             [1682917219125, 1000]
-      //         ]
-      //     }
-      // ]
-    for(let {coinId, quantity} of walletCoins) {
-      const coin = walletCoinPrices.find(coin => coin.coinId === coinId);
+    // walletCoinPrices: [
+    //     {
+    //         coinId: 'bitcoin',
+    //         prices: [
+    //             [1682913627610, 30000],
+    //             [1682917219120, 30100],
+    //             [1682917219125, 29000]
+    //         ]
+    //     },
+    //     {
+    //         coinId: 'etherum',
+    //         prices: [
+    //             [1682913627610, 1200],
+    //             [1682917219120, 1100],
+    //             [1682917219125, 1000]
+    //         ]
+    //     }
+    // ]
+    for (let { coinId, quantity } of walletCoins) {
+      const coin = walletCoinPrices.find((coin) => coin.coinId === coinId);
       if (!coin) continue;
 
       const prices = coin.prices;
-      const lastPrice = prices[prices.length-1][1];
-      total += quantity*lastPrice;
-
+      const lastPrice = prices[prices.length - 1][1];
+      total += quantity * lastPrice;
     }
-    setWalletTotal(total)
-  }, [walletCoins, walletCoinPrices])
-  
+    setWalletTotal(total);
+  }, [walletCoins, walletCoinPrices]);
 
   return (
     <div className="container app">
-        <div className="row">
-            <div className="col-4 app-section">
-              <WatchList
-                allCoins={allCoins}
-                watchListCoins={watchListCoins}
-                onWatchListCoinAdded={onWatchListCoinAdded}
-                onWatchListCoinDeleted={onWatchListCoinDeleted}
-              />
-            </div>
-            <div className="col-8 app-section">
-               <WatchlistChart coinPrices={coinPrices} />
-            </div>
-            <div className="w-100"></div>
-            <div className="col-4 app-section">
-              <Wallet 
-                allCoins={allCoins}
-                walletCoins={walletCoins}
-                onWalletCoinAdded={onWalletCoinAdded}
-                walletTotal={walletTotal}
-              />
-            </div>
-            <div className="col-8 app-section">
-              <WalletChart
-                walletCoinPrices={walletCoinPrices}
-                walletCoins={walletCoins} />
-            </div>          
+      {apiError && <div className="row error">Oops! Coingecko API rate limit exceeded, please try again in a minute.</div>}
+      <div className="row">
+        <div className="col-4 app-section">
+          <WatchList
+            allCoins={allCoins}
+            watchListCoins={watchListCoins}
+            onWatchListCoinAdded={onWatchListCoinAdded}
+            onWatchListCoinDeleted={onWatchListCoinDeleted}
+          />
         </div>
+        <div className="col-8 app-section">
+          <WatchlistChart coinPrices={coinPrices} />
+        </div>
+        <div className="w-100"></div>
+        <div className="col-4 app-section">
+          <Wallet
+            allCoins={allCoins}
+            walletCoins={walletCoins}
+            onWalletCoinAdded={onWalletCoinAdded}
+            walletTotal={walletTotal}
+          />
+        </div>
+        <div className="col-8 app-section">
+          <WalletChart
+            walletCoinPrices={walletCoinPrices}
+            walletCoins={walletCoins}
+          />
+        </div>
+      </div>
 
       {/* <CoinList onCoinSelected={onCoinSelected}/> */}
     </div>

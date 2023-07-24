@@ -17,3 +17,11 @@ body.app-body {
   padding: 10px;
   background: #000000b5;
 }
+
+.error {
+  padding: 5px;
+  background-color: #ff0000a3;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
