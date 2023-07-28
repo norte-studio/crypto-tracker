@@ -87,3 +87,24 @@ select {
   border: 0
 }
 
+.wallet-coin {
+  display: flex;
+  padding: 4px 8px;
+  background-color: #ffffff38;
+  margin-top: 5px;
+  border-radius: 6px;
+}
+
+.wallet-coin-symbol {
+  flex: 1;
+}
+
+.wallet-coin-quantity {
+  width: 84px;
+}
+
+.wallet-coin-del {
+  width: 30px;
+  text-align: center;
+}
+

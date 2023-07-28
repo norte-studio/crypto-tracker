@@ -30,9 +30,10 @@ export default function Wallet({className, allCoins, onWalletCoinAdded, walletCo
       </div>
       <div className="wallet-coins">
         {walletCoins.map(coin => {
-          return <div key={coin.coinId}>
-            <span>{coin.coinId}</span>
-            <input type="number" value={coin.quantity}/>
+          return <div className="wallet-coin" key={coin.coinId}>
+            <div className="wallet-coin-symbol">{coin.coinId}</div>
+            <div className="wallet-coin-quantity">{coin.quantity}</div>
+            <div className="wallet-coin-del">x</div>
           </div>
         })}
       </div>
