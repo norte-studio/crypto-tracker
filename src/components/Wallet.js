@@ -15,7 +15,7 @@ export default function Wallet({className, allCoins, onWalletCoinAdded, walletCo
 
   return (
     <div className={className}>
-      <div>Wallet</div>
+      <div className="section-header">Wallet</div>
       <div className="coin-to-add">
           <select onChange={(e) => onWalletListCoinSelected(e.target.value)}>
                   <option key="default" value="default">Select coin</option>
@@ -37,7 +37,10 @@ export default function Wallet({className, allCoins, onWalletCoinAdded, walletCo
           </div>
         })}
       </div>
-      <div className="total">{walletTotal}</div>
+      <div className="total">
+        <div className="total-text">Total</div>
+        <div className="total-amount">${walletTotal.toFixed(1)}</div> 
+        </div>
 
     </div>
   )

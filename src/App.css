@@ -108,3 +108,19 @@ select {
   text-align: center;
 }
 
+.total {
+  display: flex;
+  padding: 4px 8px;
+  background-color: #ffffff38;
+  margin-top: 5px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.total-text {
+  flex: 1;
+}
+
+.section-header {
+  font-weight: bold;
+}

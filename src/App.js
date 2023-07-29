@@ -12,6 +12,12 @@ const defaultWatchList = [
   { id: "binancecoin", symbol: "bnb", name: "BNB" },
 ];
 
+const defaultWalletCoins = [
+  { coinId: "bitcoin", quantity: 0.1},
+  { coinId: "ethereum", quantity: 5},
+  { coinId: "binancecoin", quantity: 10 },
+]
+
 function App() {
   const [allCoins, setAllCoins] = useState([]);
   const [watchListCoins, setWatchListCoins] = useState(defaultWatchList);
@@ -22,7 +28,7 @@ function App() {
   //       { coindId: 'etherum', prices: [      ]},
   //  ]
 
-  const [walletCoins, setWalletCoins] = useState([]);
+  const [walletCoins, setWalletCoins] = useState(defaultWalletCoins);
   const [walletTotal, setWalletTotal] = useState(0);
   const [walletCoinPrices, setWalletCoinPrices] = useState([]);
 
@@ -53,6 +59,7 @@ function App() {
       })
     );
     setCoinPrices(result);
+    setWalletCoinPrices(result);
   };
 
   const fetchAllCoins = async () => {

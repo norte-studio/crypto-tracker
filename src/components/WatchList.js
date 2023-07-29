@@ -2,7 +2,7 @@
 export default function WatchList({allCoins, watchListCoins, onWatchListCoinAdded, onWatchListCoinDeleted}) {
   return (
     <div>
-        <div>WatchList</div>
+        <div className="section-header">WatchList</div>
         <div className="watchlist-select-container">
             <select onChange={(e) => onWatchListCoinAdded(e.target.value)}>
                 <option key="default" value="default">Add coin to watchlist</option>
