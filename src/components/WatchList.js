@@ -5,7 +5,7 @@ export default function WatchList({allCoins, watchListCoins, onWatchListCoinAdde
         <div className="section-header">WatchList</div>
         <div className="watchlist-select-container">
             <select onChange={(e) => onWatchListCoinAdded(e.target.value)}>
-                <option key="default" value="default">Add coin to watchlist</option>
+                <option key="default" value="default">Add coin</option>
                 {allCoins.map(coin => <option key={coin.id} value={coin.id}>{coin.name} ({coin.symbol})</option>)}
             </select>
         </div>

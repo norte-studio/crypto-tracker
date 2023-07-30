@@ -1,12 +1,13 @@
 
 import { useState } from "react";
 
-export default function Wallet({className, allCoins, onWalletCoinAdded, walletCoins, walletTotal}) {
+export default function Wallet({className, allCoins, onWalletCoinAdded, walletCoins, walletTotal, onWalletCoinDeleted}) {
 
-  const [walletCoinToAdd, setWalletCoinToAdd] = useState({coinId:'bitcoin', quantity:1});
+  const [walletCoinToAdd, setWalletCoinToAdd] = useState({coinId:'bitcoin', symbol: 'btc', quantity:1});
 
   const onWalletListCoinSelected = (coinId) => {
-    setWalletCoinToAdd({...walletCoinToAdd, coinId})
+    const symbol = allCoins.find(el => el.id === coinId).symbol;
+    setWalletCoinToAdd({...walletCoinToAdd, coinId, symbol})
   }
   
   const onWalletListCoinQuantityChanged = (quantity) => {
@@ -18,7 +19,6 @@ export default function Wallet({className, allCoins, onWalletCoinAdded, walletCo
       <div className="section-header">Wallet</div>
       <div className="coin-to-add">
           <select onChange={(e) => onWalletListCoinSelected(e.target.value)}>
-                  <option key="default" value="default">Select coin</option>
                   {allCoins.map(coin => <option key={coin.id} value={coin.id}>{coin.name} ({coin.symbol})</option>)}
           </select>
           <input 
@@ -26,14 +26,17 @@ export default function Wallet({className, allCoins, onWalletCoinAdded, walletCo
               placeholder="1"
               onChange={(e) => onWalletListCoinQuantityChanged(e.target.value)}
           />
-          <button onClick={() => onWalletCoinAdded(walletCoinToAdd)}>Add</button>
+          <button 
+            onClick={() => onWalletCoinAdded(walletCoinToAdd)}>
+              Add
+          </button>
       </div>
       <div className="wallet-coins">
         {walletCoins.map(coin => {
           return <div className="wallet-coin" key={coin.coinId}>
-            <div className="wallet-coin-symbol">{coin.coinId}</div>
+            <div className="wallet-coin-symbol">{coin.symbol}</div>
             <div className="wallet-coin-quantity">{coin.quantity}</div>
-            <div className="wallet-coin-del">x</div>
+            <div onClick={() => onWalletCoinDeleted(coin.coinId)} className="wallet-coin-del">x</div>
           </div>
         })}
       </div>

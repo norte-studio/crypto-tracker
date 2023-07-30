@@ -13,9 +13,9 @@ const defaultWatchList = [
 ];
 
 const defaultWalletCoins = [
-  { coinId: "bitcoin", quantity: 0.1},
-  { coinId: "ethereum", quantity: 5},
-  { coinId: "binancecoin", quantity: 10 },
+  { coinId: "bitcoin", symbol: 'btc', quantity: 0.1},
+  { coinId: "ethereum", symbol: 'eth', quantity: 5},
+  { coinId: "binancecoin",symbol: 'bnb', quantity: 10 },
 ]
 
 function App() {
@@ -132,6 +132,10 @@ function App() {
     setWalletTotal(total);
   }, [walletCoins, walletCoinPrices]);
 
+  const onWalletCoinDeleted = (coinId) => {
+    setWalletCoins(walletCoins.filter(coin => coin.coinId !== coinId))
+  }
+
   return (
     <div className="container app">
       {apiError && <div className="row error">Oops! Coingecko API rate limit exceeded, please try again in a minute.</div>}
@@ -154,6 +158,7 @@ function App() {
             walletCoins={walletCoins}
             onWalletCoinAdded={onWalletCoinAdded}
             walletTotal={walletTotal}
+            onWalletCoinDeleted={onWalletCoinDeleted}
           />
         </div>
         <div className="col-8 app-section">
