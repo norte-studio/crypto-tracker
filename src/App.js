@@ -140,7 +140,7 @@ function App() {
     <div className="container app">
       {apiError && <div className="row error">Oops! Coingecko API rate limit exceeded, please try again in a minute.</div>}
       <div className="row">
-        <div className="col-4 app-section">
+        <div className="col-12 col-md-4 app-section">
           <WatchList
             allCoins={allCoins}
             watchListCoins={watchListCoins}
@@ -148,11 +148,11 @@ function App() {
             onWatchListCoinDeleted={onWatchListCoinDeleted}
           />
         </div>
-        <div className="col-8 app-section">
+        <div className="col-12 col-md-8 app-section">
           <WatchlistChart coinPrices={coinPrices} />
         </div>
         <div className="w-100"></div>
-        <div className="col-4 app-section">
+        <div className="col-12 col-md-4 app-section">
           <Wallet
             allCoins={allCoins}
             walletCoins={walletCoins}
@@ -161,7 +161,7 @@ function App() {
             onWalletCoinDeleted={onWalletCoinDeleted}
           />
         </div>
-        <div className="col-8 app-section">
+        <div className="col-12 col-md-8 app-section">
           <WalletChart
             walletCoinPrices={walletCoinPrices}
             walletCoins={walletCoins}
