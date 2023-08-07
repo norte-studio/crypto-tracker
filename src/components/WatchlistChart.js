@@ -2,6 +2,12 @@ import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import moment from 'moment';
 
+const colors = [
+  '#82ca9d',
+  'yellow',
+  'red'
+];
+
  // input
     // coinPrices: [
     //     {
@@ -83,7 +89,7 @@ export default function WatchlistChart ({coinPrices}) {
           <YAxis />
           <Tooltip />
           <Legend />
-          {coinPrices.map((coin, id) => <Line type="monotone" dataKey={coin.coinId} stroke="#82ca9d" />)}
+          {coinPrices.map((coin, id) => <Line type="monotone" dataKey={coin.coinId} stroke={colors[id % 3]} />)}
         </LineChart>
       </ResponsiveContainer>
     );
