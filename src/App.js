@@ -148,7 +148,7 @@ function App() {
             onWatchListCoinDeleted={onWatchListCoinDeleted}
           />
         </div>
-        <div className="col-12 col-md-8 app-section">
+        <div className="col-12 col-md-8 app-section app-section-chart">
           <WatchlistChart coinPrices={coinPrices} />
         </div>
         <div className="w-100"></div>
@@ -161,7 +161,7 @@ function App() {
             onWalletCoinDeleted={onWalletCoinDeleted}
           />
         </div>
-        <div className="col-12 col-md-8 app-section">
+        <div className="col-12 col-md-8 app-section app-section-chart">
           <WalletChart
             walletCoinPrices={walletCoinPrices}
             walletCoins={walletCoins}

@@ -13,9 +13,12 @@ body.app-body {
 }
 
 .app-section {
-  min-height: 300px;
   padding: 10px;
   background: #000000b5;
+}
+
+.app-section-chart {
+  min-height: 300px;
 }
 
 .error {
