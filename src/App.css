@@ -17,6 +17,7 @@ body.app-body {
   background: #000000b5;
 }
 
+/* Chart component requires container to have non-zero height */
 .app-section-chart {
   min-height: 300px;
 }
