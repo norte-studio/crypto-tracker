@@ -1,5 +1,6 @@
-
 import { useState } from "react";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import { BsInfoCircle} from 'react-icons/bs';
 
 export default function Wallet({className, allCoins, onWalletCoinAdded, walletCoins, walletTotal, onWalletCoinDeleted}) {
 
@@ -16,7 +17,14 @@ export default function Wallet({className, allCoins, onWalletCoinAdded, walletCo
 
   return (
     <div className={className}>
-      <div className="section-header">Wallet</div>
+      <span className="section-header">Wallet</span>
+      <BsInfoCircle data-tooltip-id="wallet-tooltip" className="ms-2"/>
+            <ReactTooltip
+                id="wallet-tooltip"
+                place="right"
+                variant="light"
+                content="Total shows how your seleted coins would perform for the past month"
+            />
       <div className="coin-to-add">
           <select onChange={(e) => onWalletListCoinSelected(e.target.value)}>
                   {allCoins.map(coin => <option key={coin.id} value={coin.id}>{coin.name} ({coin.symbol})</option>)}
